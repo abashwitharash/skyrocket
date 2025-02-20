@@ -15,4 +15,10 @@ router.get('/', async (req, res) => {
     }
   });
 
+
+  //making a new template in applications to make a new application
+  router.get('/new', async (req, res) => {
+    res.render('applications/new.ejs');
+  });
+
 module.exports = router;
