@@ -7,18 +7,42 @@ const User = require('../models/user.js');
 // routes send info between one to another 
 //index route 
 router.get('/', async (req, res) => {
-    try { // saying try to do this and if not then push the error. sort of like an if/else statment
-      res.render('applications/index.ejs');
+    try {
+        const currentUser = await User.findById(req.session.user._id);
+        // saying try to do this and if not then push the error. sort of like an if/else statment
+      res.render('applications/index.ejs', {
+        applications: currentUser.applications
+      });
+
     } catch (error) {
       console.log(error);
       res.redirect('/');
     }
   });
 
-
   //making a new template in applications to make a new application
   router.get('/new', async (req, res) => {
     res.render('applications/new.ejs');
   });
+
+  //post into user/applicaitons 
+router.post('/', async (req, res) => {
+    try {
+      // Look up the user from req.session
+      const currentUser = await User.findById(req.session.user._id);
+      // Push req.body (the new form data object) to the
+      // applications array of the current user so we can pus the request body 
+      currentUser.applications.push(req.body);
+      // Save changes to the user
+      await currentUser.save();
+      // Redirect back to the applications index view
+      res.redirect(`/users/${currentUser._id}/applications`);
+    } catch (error) {
+      // If any errors, log them and redirect back home
+      console.log(error);
+      res.redirect('/');
+    }
+  });
+  
 
 module.exports = router;
