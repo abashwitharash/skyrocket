@@ -45,7 +45,6 @@ app.get('/', (req, res) => {
 
 app.use('/auth', authController);
 app.use(isSignedIn); // signin middleware used here 
-
 app.use('/users/:userId/applications', applicationsController);
 
 

@@ -20,7 +20,9 @@ router.get('/', async (req, res) => {
     }
   });
 
-  //making a new template in applications to make a new application
+  //making a new template in applications to make a new application to add new apps like job applications...this is the start to adding a list....
+  //create the page first 
+  
   router.get('/new', async (req, res) => {
     res.render('applications/new.ejs');
   });
