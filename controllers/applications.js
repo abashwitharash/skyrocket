@@ -47,4 +47,18 @@ router.post('/', async (req, res) => {
   });
   
 
+
+router.get("/:applicationId", async (req, res) => {
+  try {
+    const currentUser = await User.findById(req.session.user._id); //this searches for a user by ID 
+    const application = currentUser.applications.id(req.params.applicationId); //this grabs the applications associated with that ID 
+    res.render('applications/show.ejs', {
+      application: application, // this is a key value pair...whatever that means 
+    });
+  } catch (error) {
+    console.log(error);
+    res.redirect("/");
+  }
+});
+
 module.exports = router;
